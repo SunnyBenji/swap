@@ -16,6 +16,8 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 # Install dependencies
 RUN composer install --no-interaction --no-dev --prefer-dist --no-scripts --no-progress
 
+RUN chmod -R 777 /var/www/html
+
 EXPOSE 9000
 
 CMD ["php-fpm"]
