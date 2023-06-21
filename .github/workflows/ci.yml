@@ -41,4 +41,17 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/sunnybenji/docker_rendu:1.0.0
+          tags: ghcr.io/sunnybenji/swap:latest
+      - name: SSH into DigitalOcean server and pull Docker image
+        uses: appleboy/ssh-action@v0.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            docker stop swap || true
+            docker rm swap || true
+            docker login ghcr.io -u your-username -p ${{ secrets.TOKEN }}
+            docker pull ghcr.io/sunybenji/swap:latest
+            docker run -d --name swap -p 9000:9000 -v /volume:/var/www/html/ ghcr.io/sunnybenji/swap:latest
+            
