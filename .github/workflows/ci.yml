@@ -51,7 +51,7 @@ jobs:
           script: |
             docker stop swap || true
             docker rm swap || true
-            docker login ghcr.io -u your-username -p ${{ secrets.TOKEN }}
+            docker login ghcr.io -u sunnybenji -p ${{ secrets.TOKEN }}
             docker pull ghcr.io/sunybenji/swap:latest
             docker run -d --name swap -p 9000:9000 -v /volume:/var/www/html/ ghcr.io/sunnybenji/swap:latest
             
